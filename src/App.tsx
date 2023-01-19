@@ -19,7 +19,7 @@ const App: React.FC = () => {
         }
     };
 
-    console.log(todos);
+    // console.log(todos);
 
     return (
         <div className='font-poppins bg-primary h-[100vh] w-full overflow-y-scroll no-scrollbar text-white selection:bg-violet-800 leading-relaxed'>

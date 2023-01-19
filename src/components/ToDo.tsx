@@ -4,6 +4,9 @@ import { MdDelete } from 'react-icons/md';
 import { BsCheckCircle } from 'react-icons/bs';
 import { IoIosRefresh } from 'react-icons/io';
 
+import React, { useState } from 'react';
+import { IconContext } from 'react-icons';
+
 interface Props {
     todo: Todo;
     todos: Todo[];
@@ -31,27 +34,63 @@ const ToDo: React.FC<Props> = ({ todo, todos, setTodos }: Props) => {
         setTodos(todos.filter((todo) => todo.id !== id));
     };
 
+    const [edit, setEdit] = useState<boolean>(false);
+    const [editTodo, setEditTodo] = useState<string>(todo.todo);
+
+    const editTask = (e: React.FormEvent, id: number) => {
+        e.preventDefault();
+
+        setTodos(
+            todos.map((todo) =>
+                todo.id === id ? { ...todo, todo: editTodo } : todo
+            )
+        );
+        setEdit(false);
+    };
+
     return (
-        <form className='sm:text-[1.3rem] md:text-[1.5rem] text-[1.8rem] border-2 border-white rounded-xl text-white opacity-70 hover:opacity-100 transition-all duration-200 ease-in-out flex justify-around items-center mx-auto sm:w-[90vw] w-[100%] h-max px-[2rem]'>
-            {todo.isDone === true ? (
+        <form
+            onSubmit={(e) => editTask(e, todo.id)}
+            className='sm:text-[1.3rem] md:text-[1.5rem] text-[1.8rem] border-2 border-white rounded-xl text-white opacity-70 hover:opacity-100 transition-all duration-200 ease-in-out flex justify-around items-center mx-auto sm:w-[90vw] w-[100%] h-max px-[2rem]'
+        >
+            {edit ? (
+                <input
+                    value={editTodo}
+                    onChange={(e) => setEditTodo(e.target.value)}
+                    className='text-dimWhite placeholder-dimWhite placeholder:opacity-25 bg-dimBlue hover:border-white opacity-90 transition-all duration-300 ease-in-out items-center sm:my-5 mx-auto px-[1.5rem] py-1 w-[90%] h-max sm:text-[1.8rem] text-[2rem] rounded-3xl outline-none border-2 border-dimWhite'
+                />
+            ) : todo.isDone === true ? (
                 <s className='w-[50%] pr-0 italic'>{todo.todo}</s>
             ) : (
                 <span className='w-[50%] pr-0'>{todo.todo}</span>
             )}
-            <span className='h-[100%] my-5 flex justify-between w-[10rem]'>
-                <FiEdit3 className='hover:cursor-pointer' />
-                <MdDelete
-                    onClick={() => deleteTodo(todo.id)}
-                    className='hover:cursor-pointer'
-                />
-                <BsCheckCircle
-                    onClick={() => doneTodo(todo.id)}
-                    className='hover:cursor-pointer'
-                />
-                <IoIosRefresh
-                    onClick={() => undoDone(todo.id)}
-                    className='hover:cursor-pointer'
-                />
+            <span className='h-[100%] m-5 flex justify-between w-[10rem]'>
+                <IconContext.Provider
+                    value={{ color: 'dimWhite', size: '2rem' }}
+                >
+                    <FiEdit3
+                        onClick={() => {
+                            if (!edit && !todo.isDone) {
+                                setEdit(!edit);
+                            } else {
+                                setEdit(edit);
+                            }
+                        }}
+                        className='hover:cursor-pointer'
+                    />
+                    <MdDelete
+                        onClick={() => deleteTodo(todo.id)}
+                        className='hover:cursor-pointer'
+                    />
+                    <BsCheckCircle
+                        onClick={() => doneTodo(todo.id)}
+                        className='hover:cursor-pointer'
+                    />
+                    <IoIosRefresh
+                        onClick={() => undoDone(todo.id)}
+                        className='hover:cursor-pointer'
+                    />
+                </IconContext.Provider>
             </span>
         </form>
     );

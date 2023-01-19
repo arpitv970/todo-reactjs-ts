@@ -21,7 +21,7 @@ const InputBar = ({ todo, setTodo, addTodo }: Props) => {
             ></input>
             <button
                 type='submit'
-                className='text-[1.3rem] font-semibold border-2 border-dimWhite hover:bg-dimBlue opacity-70 hover:opacity-100 transition-all duration-300 ease-in-out rounded-3xl flex items-center justify-center text-center w-[5rem] h-[3.5rem] sm:mt-2 my-auto mx-auto mb-0'
+                className='text-[1.3rem] font-semibold border-2 border-dimWhite hover:bg-dimBlue opacity-70 hover:opacity-100 transition-all duration-300 ease-in-out rounded-3xl flex items-center justify-center text-center w-[5rem] h-[3.5rem] sm:mt-2 my-0 mx-auto mb-0'
             >
                 Add
             </button>

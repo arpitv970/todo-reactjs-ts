@@ -4,7 +4,7 @@ import { MdDelete } from 'react-icons/md';
 import { BsCheckCircle } from 'react-icons/bs';
 import { IoIosRefresh } from 'react-icons/io';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { IconContext } from 'react-icons';
 
 interface Props {
@@ -48,6 +48,12 @@ const ToDo: React.FC<Props> = ({ todo, todos, setTodos }: Props) => {
         setEdit(false);
     };
 
+    useEffect(() => {
+        inputRef.current?.focus();
+    }, [edit]);
+
+    const inputRef = useRef<HTMLInputElement>(null);
+
     return (
         <form
             onSubmit={(e) => editTask(e, todo.id)}
@@ -55,9 +61,10 @@ const ToDo: React.FC<Props> = ({ todo, todos, setTodos }: Props) => {
         >
             {edit ? (
                 <input
+                    ref={inputRef}
                     value={editTodo}
                     onChange={(e) => setEditTodo(e.target.value)}
-                    className='text-dimWhite placeholder-dimWhite placeholder:opacity-25 bg-dimBlue hover:border-white opacity-90 transition-all duration-300 ease-in-out items-center sm:my-5 mx-auto px-[1.5rem] py-1 w-[90%] h-max sm:text-[1.8rem] text-[2rem] rounded-3xl outline-none border-2 border-dimWhite'
+                    className='text-dimWhite placeholder-dimWhite placeholder:opacity-25 bg-dimBlue hover:border-white opacity-90 transition-all duration-300 ease-in-out items-center sm:my-5 mx-auto px-[1.5rem] py-1 w-[50%] h-[90%] sm:text-[1.8rem] text-[2rem] rounded-xl outline-none border-2 border-dimWhite'
                 />
             ) : todo.isDone === true ? (
                 <s className='w-[50%] pr-0 italic'>{todo.todo}</s>

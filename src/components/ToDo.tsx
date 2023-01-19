@@ -28,7 +28,7 @@ const ToDo: React.FC<Props> = ({ todo, todos, setTodos }: Props) => {
     };
 
     return (
-        <form className='sm:text-[1.3rem] md:text-[1.5rem] text-[1.8rem] border-2 border-white rounded-xl text-white opacity-70 hover:opacity-100 transition-all duration-200 ease-in-out flex justify-around items-center mx-auto sm:w-[90vw] w-[30vw] h-max px-[2rem]'>
+        <form className='sm:text-[1.3rem] md:text-[1.5rem] text-[1.8rem] border-2 border-white rounded-xl text-white opacity-70 hover:opacity-100 transition-all duration-200 ease-in-out flex justify-around items-center mx-auto sm:w-[90vw] w-[100%] h-max px-[2rem]'>
             {todo.isDone === true ? (
                 <s className='w-[50%] pr-0 italic'>{todo.todo}</s>
             ) : (
